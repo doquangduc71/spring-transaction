@@ -6,11 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-public class TransferRequest {
-    private long from;
-    private long to;
-    private long amount;
+public class AccountRequest {
+    String owner;
+    private Long balance;
+
 }

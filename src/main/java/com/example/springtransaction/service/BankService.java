@@ -1,5 +1,7 @@
 package com.example.springtransaction.service;
 
+import com.example.springtransaction.dto.request.AccountRequest;
+import com.example.springtransaction.dto.response.ApiResponse;
 import com.example.springtransaction.dto.response.TransferResponse;
 import com.example.springtransaction.entity.Account;
 import com.example.springtransaction.entity.TransactLog;
@@ -95,7 +97,17 @@ public class BankService {
 
         loggingService.saveLog(fromAccID, toAccID, amount, ErrorCode.SUCCESS, ErrorCode.SUCCESS.getMessage());
 
-        return new TransferResponse(ErrorCode.SUCCESS, ErrorCode.SUCCESS.getMessage(), transferDate);
+        return TransferResponse.builder().transferDate(new Date()).build();
+    }
+    @Transactional()
+    public boolean addNewAccount(AccountRequest account) throws AccountException {
+
+        if(accountRepo.existsByOwner(account.getOwner())){
+            throw new AccountException(ErrorCode.ACCOUNT_EXIST);
+        }
+        loggingService.saveLog(999, 999, 999L, ErrorCode.DATABASE_ERROR, ErrorCode.DATABASE_ERROR.getMessage());
+        int result = accountRepo.addNewAccount(account.getOwner(),account.getBalance());
+        return result > 0;
     }
 
 

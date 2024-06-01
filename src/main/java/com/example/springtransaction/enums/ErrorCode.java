@@ -9,7 +9,8 @@ public enum ErrorCode {
     ACCOUNT_DISABLED(401,"Account has been disabled"),
     ID_NOT_FOUND(404,"Account id does not exist"),
     BALANCE_NOT_ENOUGH(405,"Balance not enough"),
-    DATABASE_ERROR(500,"Server error");
+    DATABASE_ERROR(500,"Server error"),
+    ACCOUNT_EXIST(406,"Account existed");
 
     private final int value;
     private final String message;

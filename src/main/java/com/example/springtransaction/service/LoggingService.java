@@ -24,5 +24,13 @@ public class LoggingService {
     //@Transactional(value = TxType.NEVER) //Báo lỗi Existing transaction found for transaction marked with propagation 'never'
     public void saveLog(long fromID, long toID, Long amount, ErrorCode resultCode, String detail) {
         allLogRepo.save(new AllLog(fromID, toID, amount, resultCode, detail));
+        allLogRepo.save(AllLog
+                .builder()
+                        .fromID(fromID)
+                        .toID(toID)
+                        .amount(amount)
+                        .resultCode(resultCode)
+                        .detail(detail)
+                .build());
     }
 }
