@@ -1,6 +1,7 @@
 package com.example.springtransaction.service;
 
 import com.example.springtransaction.dto.request.AccountRequest;
+import com.example.springtransaction.dto.response.AccountResponse;
 import com.example.springtransaction.dto.response.ApiResponse;
 import com.example.springtransaction.dto.response.TransferResponse;
 import com.example.springtransaction.entity.Account;
@@ -9,6 +10,7 @@ import com.example.springtransaction.enums.AccountState;
 import com.example.springtransaction.enums.ErrorCode;
 import com.example.springtransaction.exception.AccountException;
 import com.example.springtransaction.exception.BankException;
+import com.example.springtransaction.mapper.AccountMapper;
 import com.example.springtransaction.repository.AccountRepository;
 import com.example.springtransaction.repository.TransactLogRepository;
 import jakarta.transaction.Transactional;
@@ -16,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,7 +32,8 @@ public class BankService {
     @Autowired
     private LoggingService loggingService;
 
-
+    @Autowired
+    AccountMapper accountMapper;
     @Transactional(rollbackOn = { Exception.class })
     public void generateSampleData() {
         Account johnAccount = new Account("John", 1000L);
@@ -108,6 +112,11 @@ public class BankService {
         loggingService.saveLog(999, 999, 999L, ErrorCode.DATABASE_ERROR, ErrorCode.DATABASE_ERROR.getMessage());
         int result = accountRepo.addNewAccount(account.getOwner(),account.getBalance());
         return result > 0;
+    }
+
+    public List<AccountResponse> getAccounts(){
+        List<Account> acounts = accountRepo.findAll();
+         return acounts.stream().map(accountMapper::toAccountResponse).toList();
     }
 
 

@@ -1,0 +1,30 @@
+version: '3.8'
+#containers => services
+services:
+  mariadb-springboot-container:
+    image: mariadb:10.11.7-jammy
+    volumes:
+      - /Users/doquangduc/docker-mariadb/spring-docker-data:/var/lib/mysql
+    container_name: mariadb-springboot-container
+    ports:
+      - 3310:3306
+    networks:
+      - backend
+    environment:
+      MYSQL_USER: app
+      MYSQL_PASSWORD: doquangduc123
+      MYSQL_ROOT_PASSWORD: doquangduc123
+      MYSQL_DATABASE: bank
+  springboot-docker-container:
+    image: doquangduc71/springboot-docker:v1.0
+    volumes:
+      - ./:/app
+    container_name: springboot-docker-container
+    ports:
+      - 8085:8083
+    networks:
+      - backend
+#create network
+networks:
+  backend:
+    name: springboot-app-network
