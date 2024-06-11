@@ -1,3 +1,5 @@
+echo "Deleting old container"
+docker-compose -f docker-compose.yml down
 
 echo "Clean project"
 ./mvnw clean package
