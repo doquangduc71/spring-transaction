@@ -1,3 +1,6 @@
+
+echo "Clean project"
+./mvnw clean package
 # Đặt tên cho Docker image của bạn
 IMAGE_NAME="spring-transaction:v1.0"
 
@@ -11,5 +14,5 @@ fi
 echo "Building new image: $IMAGE_NAME"
 docker build -t $IMAGE_NAME .
 
-# Xem lại danh sách các image để kiểm tra
-docker images
+echo "Building new container: $IMAGE_NAME"
+docker-compose -f docker-compose.yml up -d --build
