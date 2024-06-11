@@ -16,10 +16,10 @@ services:
       MYSQL_ROOT_PASSWORD: doquangduc123
       MYSQL_DATABASE: bank
   springboot-docker-container:
-    image: doquangduc71/springboot-docker:v1.0
-    volumes:
-      - ./:/app
-    container_name: springboot-docker-container
+    image: spring-transaction:v1.0
+#    volumes:
+#      - ./:/app
+    container_name: spring-transaction
     ports:
       - 8085:8083
     networks:
@@ -28,3 +28,4 @@ services:
 networks:
   backend:
     name: springboot-app-network
+# docker-compose -f docker-compose.yml up --build
